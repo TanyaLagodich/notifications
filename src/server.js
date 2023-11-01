@@ -1,12 +1,16 @@
 require('dotenv').config();
-const http = require('http');
+const PORT = process.env.PORT || 8000;;
+
 const app = require('./app');
-const webSocketManager = require('./socket');
-const PORT = process.env.PORT || 8000;
 
-const server = http.createServer(app);
-new webSocketManager(server);
+const start = async () => {
+    try {
+        await app.listen(PORT);
+        app.log.info(`Server is running on ${app.server.address().port}`);
+    } catch (err) {
+        app.log.error(err);
+        process.exit(1);
+    }
+};
 
-server.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-});
+start();
