@@ -1,9 +1,8 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
-const routers = require('./routers');
+const fastify = require('fastify')({ logger: true });
+const notificationRoutes = require('./routers');
+const cors = require('@fastify/cors');
 
-app.use(bodyParser.json());
-app.use(routers)
+fastify.register(cors, {});
+fastify.register(notificationRoutes);
 
-module.exports = app;
+module.exports = fastify;
