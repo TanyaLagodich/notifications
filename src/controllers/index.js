@@ -1,16 +1,24 @@
 const eventEmitter = require('../eventEmitter');
+const clients = require('../clients');
+const { sendToClient } = require('../eventsHandler');
 
 class NotificationController {
     getNotification(req, res) {
+        const userId = req.body.userId;
+        const notificationType = req.body.notificationType;
+
         try {
             const notificationData = req.body;
-            console.log('Получено уведомление:', notificationData);
+            console.log('Получено уведомление:', notificationData, clients);
 
-            eventEmitter.emit('send-notification', notificationData);
+            sendToClient({ userId, notificationType });
 
-            res.status(200).send('Уведомление получено');
+            // eventEmitter.emit('send-notification', notificationData);
+
+            res.send('Уведомление получено');
         } catch (err) {
-            res.status(500).json(err);
+            console.log({ err });
+            res.send(err);
         }
 
     }
