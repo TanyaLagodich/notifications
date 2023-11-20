@@ -1,9 +1,12 @@
-const { EventEmitter } = require('events');
+const EventEmitter = require('./event-emitter');
 
-class SSE extends EventEmitter {
+class SSE {
     constructor() {
-        super();
         this.clients = new Map();
+
+        EventEmitter.on('send-to-client', ({ userId, text }) => {
+            this.sendToClient({ userId, text });
+        });
     }
 
     addClient(req, reply) {
