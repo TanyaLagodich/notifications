@@ -11,7 +11,7 @@ class NotificationQueue {
         this.processQueue();
     }
 
-    async processQueue() {
+    processQueue() {
         if (this.isProcessing) {
             return;
         }

@@ -1,9 +1,9 @@
 const NotificationController = require('../controllers');
-const { SSE } = require('../sse');
+const WebSocket = require('../web-socket');
 
-async function routes(fastify, options) {
+async function routes(fastify) {
     fastify.post('/notification', NotificationController.getNotification);
-    fastify.get('/events/:userId', { serverSentEvents: true }, SSE.addClient.bind(SSE));
+    fastify.get('/websocket/:userId', { websocket: true }, WebSocket.addClient.bind(WebSocket));
 }
 
 module.exports = routes;
