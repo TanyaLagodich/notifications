@@ -41,7 +41,7 @@ class WebSocket {
     }
 
     sendToClient({ userId, text }) {
-        console.log({ userId, text }, this.clients);
+        // console.log({ userId, text }, this.clients);
         const clientsArray = this.clients.get(userId);
 
         if (clientsArray) {

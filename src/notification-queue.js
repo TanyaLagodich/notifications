@@ -1,13 +1,14 @@
 const EventEmitter = require('./event-emitter');
+const LinkedList = require('./linked-list');
 
 class NotificationQueue {
     constructor() {
-        this.queue = [];
+        this.linkedList = new LinkedList();
         this.isProcessing = false;
     }
 
     enqueue(notification) {
-        this.queue.push(notification);
+        this.linkedList.push(notification);
         this.processQueue();
     }
 
@@ -18,9 +19,12 @@ class NotificationQueue {
 
         this.isProcessing = true;
 
-        while (this.queue.length > 0) {
-            const notification = this.queue.shift();
-            EventEmitter.emit('send-to-client', notification);
+        while (!this.linkedList.isEmpty()) {
+            const { value } = this.linkedList.shift();
+            EventEmitter.emit('send-to-client', value);
+            // new Promise(() => {
+            //     EventEmitter.emit('send-to-client', notification);
+            // }).then().catch((err) => console.error(err));
         }
 
         this.isProcessing = false;
