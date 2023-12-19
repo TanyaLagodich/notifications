@@ -1,9 +1,10 @@
-const NotificationController = require('../controllers');
-const WebSocket = require('../web-socket');
+const NotificationController = require('../controllers/notifications');
+const WebSocketController = require('../controllers/web-socket');
+const checkDomain = require('../middlewares/check-domain');
 
 async function routes(fastify) {
-    fastify.post('/notification', NotificationController.getNotification);
-    fastify.get('/websocket/:userId', { websocket: true }, WebSocket.addClient.bind(WebSocket));
+    fastify.post('/notification', { schema: NotificationController.schema, preHandler: checkDomain }, NotificationController.getNotification);
+    fastify.get('/websocket/:userId', { websocket: true }, WebSocketController.addClient);
 }
 
 module.exports = routes;

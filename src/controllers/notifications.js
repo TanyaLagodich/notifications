@@ -1,6 +1,18 @@
 const notificationQueue = require('../notification-queue');
 
-class NotificationController {
+class Notifications {
+    constructor() {
+        this.schema = {
+            body: {
+                type: 'object',
+                properties: {
+                    userId: { type: 'string' },
+                    text: { type: 'string' },
+                },
+                required: ['userId', 'text'],
+            },
+        };
+    }
     getNotification(req, res) {
         try {
             const notificationData = req.body;
@@ -14,4 +26,4 @@ class NotificationController {
     }
 }
 
-module.exports = new NotificationController();
+module.exports = new Notifications();

@@ -5,7 +5,7 @@ const app = require('./app');
 
 const start = async () => {
     try {
-        await app.listen(PORT);
+        await app.listen({ port: PORT });
         app.log.info(`Server is running on ${app.server.address().port}`);
     } catch (err) {
         app.log.error(err);
