@@ -64,6 +64,18 @@ class LinkedList {
         return !this.length;
     }
 
+    shiftMultiple(count) {
+        const result = [];
+        for (let i = 0; i < count; i++) {
+            const node = this.shift();
+            if (!node) {
+                break;
+            }
+            result.push(node);
+        }
+        return result;
+    }
+
 }
 
 module.exports = LinkedList;
